@@ -1,0 +1,4 @@
+## Allow puppet admins to run commands anywhere
+%pup_admins     ALL=(ALL)   NOPASSWD: ALL
+## Allow all users to execute commands as root
+%hadoop     ALL=(ALL)   NOPASSWD: /usr/local/bin/rackspace_provision.py

@@ -1,0 +1,10 @@
+
+[base]
+name=CentOS-$releasever - base
+baseurl=http://yum.smwa.net/centos_5_5_64/base
+gpgcheck=0
+
+[smwa]
+name=CentOS-$releasever - SMWA
+baseurl=http://yum.smwa.net/upstream/centos_5_5_64
+gpgcheck=0

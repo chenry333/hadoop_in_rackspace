@@ -1,0 +1,2 @@
+# Run puppet agent
+*/20 * * * * root /usr/local/sbin/puppet-agent-run.sh > /dev/null 2>&1

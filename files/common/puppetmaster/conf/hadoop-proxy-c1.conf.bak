@@ -1,0 +1,24 @@
+## begin hadoop job/hdfs master node proxy ##
+<VirtualHost *:80>
+ServerName hdfs-c1.smwa.net
+<Location / >
+	AuthType Basic
+	AuthName "/"
+	AuthUserFile /usr/local/apache2/conf/proxy-htpasswd
+	require valid-user
+</Location>
+ProxyPass / http://10.179.176.101:50070/
+ProxyPassReverse / http://10.179.176.101:50070/
+</VirtualHost>
+## begin hadoop job/hdfs master node proxy ##
+<VirtualHost *:80>
+ServerName mapred-c1.smwa.net
+<Location / >
+	AuthType Basic
+	AuthName "/"
+	AuthUserFile /usr/local/apache2/conf/proxy-htpasswd
+	require valid-user
+</Location>
+ProxyPass / http://10.179.176.101:50030/
+ProxyPassReverse / http://10.179.176.101:50030/
+</VirtualHost>

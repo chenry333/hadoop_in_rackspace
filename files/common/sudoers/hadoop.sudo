@@ -1,0 +1,2 @@
+## Allow all users to execute commands as hdfs
+%hadoop     ALL=(hdfs)   NOPASSWD: ALL

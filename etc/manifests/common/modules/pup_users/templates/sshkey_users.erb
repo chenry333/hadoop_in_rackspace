@@ -1,0 +1,16 @@
+# MANAGED BY PUPPET #
+<%=
+# Template for reading in users ssh public keys and
+# returning a combined authorized_keys file to stdout
+sshkey_users.uniq!
+sshkey_users.sort!
+sshkey_users.map {
+        |u|
+        u.strip!
+        if !u.empty?
+                if File.exist?("/var/lib/puppet/files/common/pup_users/ssh_keys/#{u}/#{u}.pub")
+                        File.readlines("/puppet/files/common/pup_users/ssh_keys/#{u}/#{u}.pub")
+                end
+        end
+}
+-%>

@@ -1,0 +1,6 @@
+#default sudoers
+
+## Allow root to run any commands anywhere 
+root    ALL=(ALL)       ALL
+## Allow puppet admins to run commands anywhere
+%pup_admins     ALL=(ALL)   NOPASSWD: ALL

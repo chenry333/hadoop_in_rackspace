@@ -1,0 +1,201 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+<property>
+    <name>mapred.tasktracker.map.tasks.maximum</name>
+    <value>3</value>
+    <final>true</final>
+    <description>
+        The maximum number of map tasks that will be run simultaneously by a task tracker
+    </description>
+</property>
+
+<property>
+    <name>mapred.tasktracker.reduce.tasks.maximum</name>
+    <value>2</value>
+    <final>true</final>
+    <description>
+        The maximum number of reduce tasks that will be run simultaneously by a task tracker
+    </description>
+</property>
+
+<property>
+        <name>mapred.local.dir</name>
+        <value>/hadoop/mapred/tmp</value>
+</property>
+
+<property>
+    <name>mapred.system.dir</name>
+    <value>/mapred/system</value>
+    <description>
+        The shared directory where MapReduce stores control files.
+    </description>
+</property>
+
+<property>
+        <name>mapred.local.dir.minspacestart</name>
+        <value>4294967296</value>
+    <description>
+        If the space in mapred.local.dir drops under this, do not ask for more tasks. Value in bytes. 
+        set to 4 GB
+    </description>
+</property>
+
+<property>
+        <name>mapred.local.dir.minspacekill</name>
+        <value>536870912</value>
+    <description>
+        If the space in mapred.local.dir drops under this, do not ask more tasks until all the current ones 
+        have finished and cleaned up.  Also, to save the rest of the tasks we have running, kill one of 
+        them, to clean up some space. Start with the reduce tasks, then go with the ones that have 
+        finished the least. Value in bytes. 
+        set to 512MB
+    </description>
+</property>
+
+
+<property>
+    <name>mapred.child.java.opts</name>
+    <value>-Xmx512M</value>
+    <final>true</final>
+    <description>
+        Java options passed to TaskTracker child processes.  Default is -Xmx200m.
+        Set to 384 MB per child
+    </description>
+</property>
+
+<property>
+    <name>mapred.map.tasks.speculative.execution</name>
+    <value>true</value>
+</property>
+
+<property>
+    <name>mapred.reduce.tasks.speculative.execution</name>
+    <value>false</value>
+    <description>
+        Usually slow because of copying data over network.  Don't want to spin up another to copy data.
+    </description>
+</property>
+
+<property>
+    <name>mapred.job.tracker.handler.count</name>
+    <value>12</value>
+    <final>true</final>
+    <description>
+        Number of server threads for JobTracker.  Default 10.  Recommend 4% of number of TaskTrackers.
+    </description>
+</property>
+
+<property>
+    <name>mapred.reduce.parallel.copies</name>
+    <value>5</value>
+    <description>
+        Number of parallel transfers run by reducers during copy phase.  Default is 5.
+    </description>
+</property>
+
+<property>
+    <name>mapred.reduce.tasks</name>
+    <value>38</value>
+    <description>
+        The default number of reduce tasks per job. Typically set to 99% of the cluster's reduce capacity,
+        so that if a node fails the reduces can still be executed in a single wave.
+        Ignored when mapred.job.tracker is "local". 10 * 3 * 0.99 
+    </description>
+</property>
+
+<property>
+    <name>mapreduce.map.output.compress</name>
+    <value>true</value>
+</property>
+
+<property>
+    <name>mapred.output.compression.type</name>
+    <value>BLOCK</value>
+    <description>
+        Use SequenceFiles block compression for job outputs.
+    </description>
+</property>
+
+<property>
+    <name>tasktracker.http.threads</name>
+    <value>40</value>
+    <description>
+        Number threads used by reduces to fetch map outputs.  Default 40, recommend 20+ nodes set to 60-80
+    </description>
+</property>
+
+<property>
+    <name>hadoop.rpc.socket.factory.class.default</name>
+    <value>org.apache.hadoop.net.StandardSocketFactory</value>
+    <final>true</final>
+    <description>
+        If users connect through a SOCKS proxy, we don't want their SocketFactory settings 
+        interfering with the socket factory associated
+        with the actual daemons.
+    </description>
+</property>
+
+<property>
+    <name>hadoop.rpc.socket.factory.class.ClientProtocol</name>
+    <value></value>
+    <final>true</final>
+</property>
+
+<property>
+    <name>hadoop.rpc.socket.factory.class.JobSubmissionProtocol</name>
+    <value></value>
+    <final>true</final>
+</property>
+
+<!--
+<property>
+    <name>mapred.jobtracker.taskScheduler</name>
+    <value>org.apache.hadoop.mapred.FairScheduler</value>
+</property>
+
+<property>
+    <name>mapred.fairscheduler.allocation.file</name>
+    <value>/usr/lib/hadoop/conf/fair-scheduler.xml</value>
+</property>
+-->
+
+<property>
+    <name>mapred.jobtracker.completeuserjobs.maximum</name>
+    <value>10</value>
+    <description>
+    The maximum number of complete jobs per user to keep around before delegating them to the job history.
+    Default 100.
+    </description>
+</property>
+
+<property>
+    <name>mapred.job.tracker.retiredjobs.cache.size</name>
+    <value>50</value>
+    <description>
+        There is a hardcoded maximum of 100 jobs being displayed in the main JobTracker UI page (jobtracker.jsp). 
+        Those are pulled from the above internal memory cache. If the user wants to see all completed jobs they have to 
+        use the Job History page (jobhistory.jsp) which loads the job details from the file system (see above under General 
+        Job File Notes). But note though that for CDH3b1 and up this is loaded from mapred.job.tracker.history.completed.location instead.
+    </description>
+</property>
+
+<property>
+    <name>mapred.job.tracker.persist.jobstatus.hours</name>
+    <value>12</value>
+    <description>
+    The number of hours job status information is persisted in DFS. The job status information will be available after it drops of the memory queue and between jobtracker restarts. With a zero value the job status information is not persisted at all in DFS.
+    </description>
+</property>
+
+<property>
+  <name>mapred.map.output.compression.codec</name>
+  <value>com.hadoop.compression.lzo.LzoCodec</value>
+   <description>use LZO to compress map outputs</description>
+</property>
+
+
+</configuration>

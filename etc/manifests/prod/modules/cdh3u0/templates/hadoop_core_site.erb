@@ -1,0 +1,98 @@
+<%
+prefix = hostname[0,2]
+-%><?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+
+<property>
+        <name>fs.default.name</name>
+        <value>hdfs://<%= prefix %>-m001.<%= domain %>:9000</value>
+        <final>true</final>
+</property>
+
+<property>
+        <name>mapred.job.tracker</name>
+        <value><%= prefix %>-m001.<%= domain %>:9001</value>
+        <final>true</final>
+</property>
+
+<property>
+        <name>webinterface.private.actions</name>
+        <value>true</value>
+        <final>true</final>
+</property>
+
+<property>
+  <name>io.file.buffer.size</name>
+  <value>131072</value>
+  <final>true</final>
+  <description>
+    Determines how much data is buffered during read and write operations, in bytes.
+    Default is 4096. Recommendation: use a multiple of hardware page size; Recommended 65536 (64Kb).
+  </description>
+</property>
+
+<property>
+  <name>io.sort.mb</name>
+  <value>256</value>
+  <final>true</final>
+  <description>
+    Total amount of buffer memory allocated to each merge stream while sorting files, in Megabytes. Default: 100Mb.
+    Recommendation: 256.
+  </description>
+</property>
+
+<property>
+  <name>io.sort.factor</name>
+  <value>64</value>
+  <final>true</final>
+  <description>
+    Number of streams to merge at once.  Default is 10, recommend 64.
+  </description>
+</property>
+
+<!-- Commented out as we don't need 'rack aware' in the cloud
+<property>
+  <name>topology.script.file.name</name>
+  <value>/usr/lib/hadoop/bin/rack.sh</value>
+  <final>true</final>
+  <description>
+    Resolve node IP address to RackID.  See sample scripts http://devwiki/doku.php?id=platform:cluster:config:rack
+  </description>
+</property>
+-->
+
+<property>
+  <name>fs.inmemory.size.mb</name>
+  <value>150</value>
+  <final>true</final>
+</property>
+
+<property>
+    <name>io.compression.codecs</name>
+    <value>org.apache.hadoop.io.compress.DefaultCodec,org.apache.hadoop.io.compress.GzipCodec</value>
+    <description>A list of the compression codec classes that can be used for compression/decompression.</description>
+</property>
+
+<property>
+    <name>mapred.job.reuse.jvm.num.tasks</name>
+    <value>-1</value>
+    <description>Enable the infinite reuse of task JVMs within any job.</description>
+</property>
+
+<property>
+    <name>io.compression.codecs</name>
+    <value>org.apache.hadoop.io.compress.GzipCodec,org.apache.hadoop.io.compress.DefaultCodec,org.apache.hadoop.io.compress.BZip2Codec,com.hadoop.compression.lzo.LzoCodec,com.hadoop.compression.lzo.LzopCodec</value>
+    <description>Add LZO to the Codec List</description>
+</property>
+
+<property>
+    <name>io.compression.codec.lzo.class</name>
+    <value>com.hadoop.compression.lzo.LzoCodec</value>
+    <description>Add lzo codec class</description>
+</property>
+
+</configuration>

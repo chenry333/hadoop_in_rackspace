@@ -1,0 +1,55 @@
+<%
+prefix = hostname[0,2]
+-%>
+
+
+#!/bin/bash
+
+CONFIG_FILE="/usr/lib/hadoop/conf/rack.conf"
+DEFAULT_DC="rspace0"
+LOG_FILE="/usr/lib/hadoop/logs/rack.log"
+TIME=`/bin/date +%H:%M:%S`
+
+### Pull passed options into params var
+params="$@"
+
+echo "${TIME} : Initialized with params: ${params}" >> ${LOG_FILE}
+
+if [ ! -f $CONFIG_FILE ]; then
+    
+    #echo "Error - Cannot find config file $CONFIG_FILE... abandoning"
+    echo -n ""
+    exit 0
+elif [ ! $1 ]; then
+#    echo "Error I require an IP address to lookup the rack number..."
+#    echo "    ie: dc1-had01-rack.sh 10.2.0.11"
+     echo -n ""
+    exit 0
+
+else
+
+### Log time stamp for when script was called ###
+echo -n "${TIME} : returning: " >> ${LOG_FILE}
+
+### Begin searching for each node ###
+    for nodes in $params; do
+    
+        RACK=`grep ${nodes}, $CONFIG_FILE 2>&1`
+        RET_CODE=$?
+    
+        if [ $RET_CODE -ne 0 ]; then
+            echo  "${TIME}: returning: /default-rack " >> ${LOG_FILE}
+            echo -n "/default-rack "
+        else
+            echo -n "/$DEFAULT_DC/rack`echo $RACK |awk 'BEGIN {FS = ","} ; {print $4}'` " >> ${LOG_FILE}
+            echo -n "/$DEFAULT_DC/rack`echo $RACK |awk 'BEGIN {FS = ","} ; {print $4}'` "
+        fi
+
+    done
+fi
+
+### Important - Haddop chokes without a carriage return at the end ###
+echo ""
+
+### Put a return in the log ###
+echo  "" >> ${LOG_FILE}

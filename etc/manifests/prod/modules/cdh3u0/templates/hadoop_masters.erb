@@ -1,0 +1,6 @@
+<%=
+prefix = hostname[0.2]
+if File.exist?("/var/lib/puppet/files/prod/cdh3u0/conf/#{prefix}-masters")
+    File.readlines("/var/lib/puppet/files/prod/cdh3u0/conf/#{prefix}-masters")
+end
+-%>

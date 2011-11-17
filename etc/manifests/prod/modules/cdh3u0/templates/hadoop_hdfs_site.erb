@@ -1,0 +1,120 @@
+<%
+prefix = hostname[0,2]
+-%><?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+
+<property>
+  <name>dfs.http.address</name>
+  <value><%= prefix %>-m001.<%= domain %>:50070</value>
+  <description> The Primary Namenodes http server address and port.</description>
+</property>
+
+<property>
+  <name>dfs.secondary.http.address</name>
+  <value><%= prefix %>-m001.<%= domain %>:50090</value>
+  <description>The secondary namenode http server address and port. If the port is 0 then the server will start on a free port.</description>
+</property>
+
+<property>
+  <name>dfs.name.dir</name>
+  <value>/hadoop/hdfs/name-node</value>
+  <description>Determines where on the local filesystem the DFS name node
+      should store the name table(fsimage).  If this is a comma-delimited list
+      of directories then the name table is replicated in all of the
+      directories, for redundancy. </description>
+</property>
+
+<property>
+  <name>fs.checkpoint.dir</name>
+  <value>/hadoop/hdfs/s-name-node</value>
+  <description>
+    Local filesystem where secondary namenode stores its checkpoint images.
+    Copies written to all directories, comma separated, for redundancy. Image is one hour old.
+  </description>
+</property>
+
+<property>
+  <name>dfs.data.dir</name>
+  <value>/hadoop/hdfs/datanode</value>
+  <description>Determines where on the local filesystem an DFS data node
+  should store its blocks.  If this is a comma-delimited
+  list of directories, then data will be stored in all named
+  directories, typically on different devices.
+  Directories that do not exist are ignored.
+  </description>
+</property>
+
+<property>
+  <name>dfs.replication</name>
+  <value>2</value>
+  <description>Default block replication.
+  The actual number of replications can be specified when the file is created.
+  The default is used if replication is not specified in create time.
+  </description>
+</property>
+
+<property>
+  <name>dfs.block.size</name>
+  <value>67108864</value>
+  <description>The default block size for new files.</description>
+</property>
+
+<property>
+  <name>dfs.datanode.du.reserved</name>
+  <value>4294967296</value>
+  <description>
+    The amount of space on a storage volume which HDFS should not use, in bytes.  Recommend 10Gb per drive.  Set to 4GB
+  </description>
+</property>
+
+<property>
+  <name>dfs.datanode.handler.count</name>
+  <value>5</value>
+  <description>
+    Number of threads that handle block requests on the DataNode.  Default is 3.  Recommend 3-5.
+  </description>
+</property>
+
+<property>
+  <name>dfs.namenode.handler.count</name>
+  <value>15</value>
+  <description>
+    Number of threads to handle NameNode requests.  Default is 10.  Increase as number of datanodes go up for heartbeats.  Yahoo 900 node cluster used for Terrasort up'ed this value to 40.
+  </description>
+</property>
+
+<property>
+  <name>dfs.datanode.max.xcievers</name>
+  <value>1024</value>
+  <description>
+    maximum number of handler threads that are allowed per HDFS datanode
+  </description>
+</property>
+
+<property>
+  <name>dfs.permissions</name>
+  <value>true</value>
+  <description>
+    Enable permission checking.
+  </description>
+</property>
+
+<property>
+  <name>dfs.umaskmode</name>
+  <value>002</value>
+  <description>
+    Set's umask mode to 002
+  </description>
+</property>
+
+<property>
+    <!-- 200Mbit/s -->
+    <name>dfs.balance.bandwidthPerSec</name>
+    <value>209715200</value>
+</property>
+
+</configuration>
